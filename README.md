@@ -4,3 +4,5 @@ Dla osób pracujących z danymi tekstowymi nasza aplikacja Text Transformer umo�
 * Monika Zielińska
 * Alex Terentowicz
 * Daniel Zdancewicz
+
+## Sprint #1 do 21.12.2021
