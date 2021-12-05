@@ -6,3 +6,4 @@ Dla osób pracujących z danymi tekstowymi nasza aplikacja Text Transformer umo�
 * Daniel Zdancewicz
 
 ## Sprint #1 do 21.12.2021
+Cel: Podstawowa konfiguracja i zaimplementowanie najważniejszych elementów Product Backlog'u o wartości BV równej 4.
