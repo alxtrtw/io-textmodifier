@@ -1,6 +1,8 @@
 # io-texttransformer-gamma
 Dla osób pracujących z danymi tekstowymi nasza aplikacja Text Transformer umożliwi transformacje danych tekstowych (np. zmiana wielkości liter, eliminacja duplikatów, itd.). Aplikacja będzie dostępna poprzez GUI a także zdalne API dzięki czemu będzie można ją zintegrować z istniejącymi narzędziami.
 
+![example workflow](https://github.com/alxtrtw/io-texttransformer-gamma/actions/workflows/ci.yml/badge.svg)
+
 * Monika Zielińska
 * Alex Terentowicz
 * Daniel Zdancewicz
