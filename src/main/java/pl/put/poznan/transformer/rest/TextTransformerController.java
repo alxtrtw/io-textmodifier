@@ -22,8 +22,8 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(transforms));
 
         // perform the transformation, you should run your logic here, below is just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        TextTransformer transformer = new TextTransformer();
+        return transformer.transformUpperCase(text);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
@@ -35,8 +35,8 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(transforms));
 
         // perform the transformation, you should run your logic here, below is just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        TextTransformer transformer = new TextTransformer();
+        return transformer.transformUpperCase(text);
     }
 
 
