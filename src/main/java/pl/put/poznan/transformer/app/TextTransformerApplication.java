@@ -12,9 +12,7 @@ public class TextTransformerApplication {
 
     public static void main(String[] args) {
         TextTransformer textTransformer = new TextTransformer();
-        textTransformer.transformNumberToWord("wqrqw 100 rwe r wer w");
+        textTransformer.transformShorcuts("Pan prof. się spóźnił Np.");
         SpringApplication.run(TextTransformerApplication.class, args);
-
-
     }
 }
