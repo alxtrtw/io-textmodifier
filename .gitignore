@@ -12,6 +12,7 @@
 /target/
 /.idea/
 ioprojectarchitecture.iml
+io-texttransformer-gamma.iml
 
 # Package Files #
 *.jar
