@@ -9,6 +9,10 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+/target/
+/.idea/
+ioprojectarchitecture.iml
+io-texttransformer-gamma.iml
 
 # Package Files #
 *.jar
