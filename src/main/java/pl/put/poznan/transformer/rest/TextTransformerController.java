@@ -22,15 +22,14 @@ public class TextTransformerController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public String post(@PathVariable String string, @RequestBody List<String> transforms) {
-        log(string, transforms);
         return get(string, transforms);
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
 
     private static void log(String text, List<String> transforms) {
         logger.info("Requested transformation of '{}' with transforms: {}", text, transforms);
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
 }
 
 
