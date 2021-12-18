@@ -13,6 +13,8 @@
 /.idea/
 ioprojectarchitecture.iml
 io-texttransformer-gamma.iml
+/.DS_Store/
+/__MACOSX/
 
 # Package Files #
 *.jar

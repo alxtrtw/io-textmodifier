@@ -1,30 +1,29 @@
 package pl.put.poznan.transformer.rest;
 
-import pl.put.poznan.transformer.logic.TextTransformer;
+import pl.put.poznan.transformer.logic.text.*;
 
 import java.util.function.Function;
 
 public enum TransformMethod {
-    Identity(TextTransformer::identity),
-    Uppercase(TextTransformer::asUpperCase),
-    Capitalize(TextTransformer::capitalize),
-    NumberToWord(TextTransformer::numberToWord),
-    Lowercase(TextTransformer::asLowerCase),
-    Unknown(TextTransformer::identity);
+    Identity(new IdentityDecorator(new BaseTransformer())),
+    Uppercase(new UppercaseDecorator(new BaseTransformer())),
+    Lowercase(new LowercaseDecorator(new BaseTransformer())),
+    NumberToWord(new NumberToWordDecorator(new BaseTransformer())),
+    Shortcut(new ShortcutDecorator(new BaseTransformer())),
+    Capitalize(new CapitalizeDecorator(new BaseTransformer())),
+    Inverse(new InverseDecorator(new BaseTransformer())),
+    Unknown(new BaseTransformer());
 
-    public Function<String, String> getTransform() {
-        return transform;
-    }
-
-    TransformMethod(Function<String, String> transform) {
-        this.transform = transform;
-    }
+    TransformMethod(Transformer transform) {this.transform = transform;}
 
     public static TransformMethod from(String transform) {
         switch (transform.toLowerCase()) {
-            case "i":
+            case "id":
             case "identity":
                 return Identity;
+            case "i":
+            case "inverse":
+                return Inverse;
             case "u":
             case "uc":
             case "upper":
@@ -39,6 +38,10 @@ public enum TransformMethod {
             case "capitalize":
             case "capitalized":
                 return Capitalize;
+            case "s":
+            case "shortcut":
+            case "shortcuts":
+                return Shortcut;
             case "ntw":
             case "number-to-word":
             case "to-word":
@@ -48,5 +51,9 @@ public enum TransformMethod {
         }
     }
 
-    private final Function<String, String> transform;
+    private final Transformer transform;
+
+    public Function<String, String> getTransform() {
+        return transform::transform;
+    }
 }
