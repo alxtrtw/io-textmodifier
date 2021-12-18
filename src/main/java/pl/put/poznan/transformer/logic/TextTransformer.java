@@ -1,5 +1,6 @@
 package pl.put.poznan.transformer.logic;
 
+import javax.swing.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -10,19 +11,19 @@ public class TextTransformer {
     public TextTransformer() {
     }
 
-    public String transformUpperCase(String text) {
+    public static String asUpperCase(String text) {
         return text.toUpperCase();
     }
 
-    public String transformLowerCase(String text) {
+    public static String asLowerCase(String text) {
         return text.toLowerCase();
     }
 
-    public String transformCaptalize(String text) {
+    public static String capitalize(String text) {
         return text.substring(0, 1).toUpperCase() + text.substring(1);
     }
 
-    public String transformInverse(String text) {
+    public static String inverse(String text) {
         List<String> list = new ArrayList<>();
         String reverse = new StringBuffer(text).reverse().toString().toLowerCase();
         for (int i = 0; i < text.length(); i++) {
@@ -35,7 +36,7 @@ public class TextTransformer {
         return String.join("", list);
     }
 
-    public String transformShorcuts(String text) {
+    public static String shortcuts(String text) {
         String[] words = text.split(" ");
         List<String> list = new ArrayList<>();
         for (String word : words) {
@@ -44,7 +45,7 @@ public class TextTransformer {
         return String.join(" ", list);
     }
 
-    private String processShortcuts(String text) {
+    private static String processShortcuts(String text) {
         String result;
         Map<String, String> shortcuts = new Shortcuts().getShortcuts();
         boolean b = shortcuts.get(text.toLowerCase()) != null;
@@ -60,5 +61,17 @@ public class TextTransformer {
         }
         return result;
     }
+    private static String processShorcutsKeys(String text){
+        return text;
+    }
+
+    public static String numberToWord(String text){
+        return text;
+    };
+
+    public static String identity(String text){
+        return text;
+    };
+
 }
 
