@@ -7,6 +7,10 @@ Dla osób pracujących z danymi tekstowymi nasza aplikacja Text Transformer umo�
 * Alex Terentowicz
 * Daniel Zdancewicz
 
+## Dokumentacja
+Link do [Javadoc](https://alxtrtw.github.io/io-texttransformer-gamma/docs/).
+
+
 ## Sprint #1 do 21.12.2021
 * Cel: Podstawowa konfiguracja i zaimplementowanie najważniejszych elementów Product Backlog'u o wartości BV równej 4.
 * Przyjęty czas na realizację zadań: 9 godzin
