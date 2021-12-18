@@ -1,5 +1,7 @@
 package pl.put.poznan.transformer.logic.text;
 
+import pl.put.poznan.transformer.logic.PolishDictionary;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -15,20 +17,20 @@ public class NumberToWordDecorator extends TransformerDecorator {
 
         String[] words = text.strip().split(" ");
         String newText = "";
-        String newWord = "";
 
-        for (int i = 0; i <= words.length; i++){
+        for (int i = 0; i < words.length; i++){
             String word = words[i];
             String check = checkNumber(word);
+            String newWord = " ";
 
             if (check.equals("integer")){
-                newWord = translateInteger(word);
+                newWord = newWord.concat(translateInteger(word));
             }
             else if (check.equals("double")){
-                newWord = translateDouble(word);
+                newWord = newWord.concat(translateDouble(word));
             }
             else{
-                newWord = word;
+                newWord = newWord.concat(word);
             }
 
             newText = newText.concat(newWord);
@@ -58,10 +60,48 @@ public class NumberToWordDecorator extends TransformerDecorator {
     }
 
     public static String translateInteger(String strNum){
-        return "";
+        PolishDictionary dict = new PolishDictionary();
+
+        String[] digits = strNum.split("");
+        String newText = "";
+
+        for (int i = 0; i < digits.length; i++){
+            String digit = digits[i];
+            String newWord = " ";
+
+            switch (digits.length - i){
+                case 3:
+                    newWord = dict.getHundredDict().get(digit);
+                case 2:
+
+                    if (digit.equals("1")){
+                        newWord = dict.getTenDict().get( digit.concat(digits[digits.length-1]) );
+                        break;
+                    }else{
+                        newWord = dict.getTenDict().get(digit);
+                    }
+
+                case 1:
+                    newWord = dict.getDict().get(digit);
+            }
+
+            newText = newText.concat(newWord);
+        }
+
+        return newText.strip();
     }
 
     public static String translateDouble(String strNum){
-        return "";
+
+        String dot = strNum.replaceAll("[0-9]", "");
+        String[] numbers = strNum.split("\\.");
+        String newText = "";
+
+        newText = newText.concat(translateInteger(numbers[0]));
+        newText = newText.concat(" i ");
+        newText = newText.concat(translateInteger(numbers[1]));
+        newText = newText.concat(" po przecinku");
+
+        return newText;
     }
 }
