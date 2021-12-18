@@ -1,10 +1,7 @@
 package pl.put.poznan.transformer.logic.text;
 
-import pl.put.poznan.transformer.logic.Shortcuts;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class InverseDecorator extends TransformerDecorator {
     public InverseDecorator(Transformer transformer) {
@@ -14,28 +11,15 @@ public class InverseDecorator extends TransformerDecorator {
     @Override
     public String transform(String text) {
         text = super.transform(text);
-        String[] words = text.split(" ");
         List<String> list = new ArrayList<>();
-        for (String word : words) {
-            list.add(processShortcuts(word));
-        }
-        return String.join(" ", list);
-    }
-
-    private static String processShortcuts(String text) {
-        String result;
-        Map<String, String> shortcuts = new Shortcuts().getShortcuts();
-        boolean b = shortcuts.get(text.toLowerCase()) != null;
-        if (b) {
-            if (Character.isUpperCase(text.charAt(0))) {
-                result = shortcuts.get(text.toLowerCase());
-                result = result.substring(0, 1).toUpperCase() + result.substring(1);
+        String reverse = new StringBuffer(text).reverse().toString().toLowerCase();
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isUpperCase(text.charAt(i))) {
+                list.add(Character.toString(reverse.charAt(i)).toUpperCase());
             } else {
-                result = shortcuts.get(text);
+                list.add(Character.toString(reverse.charAt(i)));
             }
-        } else {
-            result = text;
         }
-        return result;
+        return String.join("", list);
     }
 }
