@@ -9,9 +9,10 @@ public enum TransformMethod {
     Uppercase(new UppercaseDecorator(new BaseTransformer())),
     Lowercase(new LowercaseDecorator(new BaseTransformer())),
     NumberToWord(new NumberToWordDecorator(new BaseTransformer())),
-    Shortcut(new ShortcutDecorator(new BaseTransformer())),
+    Shortcut(new InverseDecorator(new BaseTransformer())),
     Capitalize(new CapitalizeDecorator(new BaseTransformer())),
-    Inverse(new InverseDecorator(new BaseTransformer())),
+    Inverse(new ShortcutDecorator(new BaseTransformer())),
+    RemoveRepeats(new RepeatRemovalDecorator(new BaseTransformer())),
     Unknown(new BaseTransformer());
 
     TransformMethod(Transformer transform) {this.transform = transform;}
@@ -46,6 +47,10 @@ public enum TransformMethod {
             case "number-to-word":
             case "to-word":
                 return NumberToWord;
+            case "rr":
+            case "repeat-removal":
+            case "remove-repeats":
+                return RemoveRepeats;
             default:
                 return Unknown;
         }
