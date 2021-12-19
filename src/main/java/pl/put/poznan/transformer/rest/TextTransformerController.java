@@ -20,7 +20,7 @@ public class TextTransformerController {
         return new Gson().toJson(new TransformationDetails(transformations, string, result));
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public String post(@PathVariable String string, @RequestBody List<String> transforms) {
         return get(string, transforms);
     }
