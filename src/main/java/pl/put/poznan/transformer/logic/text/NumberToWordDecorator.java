@@ -1,9 +1,8 @@
 package pl.put.poznan.transformer.logic.text;
 
+import io.vavr.collection.Iterator;
 import pl.put.poznan.transformer.logic.PolishDictionary;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class NumberToWordDecorator extends TransformerDecorator {
@@ -13,76 +12,33 @@ public class NumberToWordDecorator extends TransformerDecorator {
 
     @Override
     public String transform(String text) {
-        text = super.transform(text);
-
-        String[] words = text.strip().split(" ");
-        String newText = "";
-
-        for (int i = 0; i < words.length; i++){
-            String word = words[i];
-            String check = checkNumber(word);
-            String newWord = " ";
-
-            if (check.equals("integer")){
-                newWord = newWord.concat(translateInteger(word));
-            }
-            else if (check.equals("double")){
-                newWord = newWord.concat(translateDouble(word));
-            }
-            else{
-                newWord = newWord.concat(word);
-            }
-
-            newText = newText.concat(newWord);
-        }
-
-        return text;
+        return Iterator.of(super.transform(text).split("\\s+")).map(this::translate).mkString(" ");
     }
 
-    public static String checkNumber(String strNum) {
-        Pattern integerPattern = Pattern.compile("^\\d+$");
-        Pattern doublePattern = Pattern.compile("/^[0-9]+.[0-9]+$");
-
-        if (integerPattern.matcher(strNum).matches()){
-            int i = Integer.parseInt(strNum);
-            if ( i < 1000 && i >= 0){
-                return "integer";
-            }
-        }
-        else if (doublePattern.matcher(strNum).matches()){
-            int d = Integer.parseInt(strNum);
-            if ( d < 1000 && d >= 0){
-                return "double";
-            }
-        }
-
-        return "none";
-    }
-
-    public static String translateInteger(String strNum){
+    private String translateInteger(String integerText) {
         PolishDictionary dict = new PolishDictionary();
 
-        String[] digits = strNum.split("");
+        String[] digits = integerText.split("");
         String newText = "";
 
-        for (int i = 0; i < digits.length; i++){
+        for (int i = 0; i < digits.length; i++) {
             String digit = digits[i];
-            String newWord = " ";
+            String newWord = "";
 
-            switch (digits.length - i){
+            switch (digits.length - i) {
                 case 3:
                     newWord = dict.getHundredDict().get(digit);
+                    break;
                 case 2:
-
-                    if (digit.equals("1")){
-                        newWord = dict.getTenDict().get( digit.concat(digits[digits.length-1]) );
-                        break;
-                    }else{
+                    if (digit.equals("1")) {
+                        newWord = dict.getTenDict().get(digit.concat(digits[digits.length - 1]));
+                    } else {
                         newWord = dict.getTenDict().get(digit);
                     }
-
+                    break;
                 case 1:
                     newWord = dict.getDict().get(digit);
+                    break;
             }
 
             newText = newText.concat(newWord);
@@ -91,17 +47,37 @@ public class NumberToWordDecorator extends TransformerDecorator {
         return newText.strip();
     }
 
-    public static String translateDouble(String strNum){
+    private String translateDecimal(String decimalText) {
+        var numbers = decimalText.split("\\.");
+        return translateInteger(numbers[0]) + " i " + translateInteger(numbers[1]) + " po przecinku";
+    }
 
-        String dot = strNum.replaceAll("[0-9]", "");
-        String[] numbers = strNum.split("\\.");
-        String newText = "";
+    private String translate(String word) {
+        switch (NumberType.identify(word)) {
+            case Integer:
+                return translateInteger(word);
+            case Decimal:
+                return translateDecimal(word);
+            case Invalid:
+            default:
+                return word;
+        }
+    }
 
-        newText = newText.concat(translateInteger(numbers[0]));
-        newText = newText.concat(" i ");
-        newText = newText.concat(translateInteger(numbers[1]));
-        newText = newText.concat(" po przecinku");
+    private enum NumberType {
+        Integer(Pattern.compile("\\d+")), Decimal(Pattern.compile("")), Invalid(Pattern.compile(""));
 
-        return newText;
+        NumberType(Pattern pattern) {
+            this.pattern = pattern;
+        }
+
+        private final Pattern pattern;
+
+        public static NumberType identify(String str) {
+            if (Integer.pattern.matcher(str).matches()) return Integer;
+            if (Decimal.pattern.matcher(str).matches()) return Decimal;
+            return Invalid;
+        }
     }
 }
+
