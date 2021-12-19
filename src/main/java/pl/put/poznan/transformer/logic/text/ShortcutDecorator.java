@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Klasa odpowiedzialna za podmianę skrótów na ich rozszerzenia w tekście.
+ */
 public class ShortcutDecorator extends TransformerDecorator {
     public ShortcutDecorator(Transformer transformer) {
         super(transformer);
