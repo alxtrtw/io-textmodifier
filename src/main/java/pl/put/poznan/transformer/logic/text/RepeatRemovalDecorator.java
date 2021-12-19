@@ -1,6 +1,6 @@
 package pl.put.poznan.transformer.logic.text;
 
-import java.util.Arrays;
+import io.vavr.collection.Stream;
 
 public class RepeatRemovalDecorator extends TransformerDecorator {
     public RepeatRemovalDecorator(Transformer transformer) {
@@ -9,14 +9,16 @@ public class RepeatRemovalDecorator extends TransformerDecorator {
 
     @Override
     public String transform(String text) {
-        var previous = new Object() {
+        final var previous = new Object() {
             String word = null;
         };
-        return Arrays.stream(text.split("\\s+")).reduce(super.transform(""), (sentence, word) -> {
+
+        return Stream.of(text.split("\\s+")).reduce((sentence, word) -> {
             if (word.equals(previous.word)) return super.transform(sentence);
 
             previous.word = word;
             return super.transform(sentence + " " + word);
         });
     }
+
 }
