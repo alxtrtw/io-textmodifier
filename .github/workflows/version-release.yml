@@ -1,0 +1,80 @@
+name: Version - release
+on:
+  workflow_dispatch:
+    branches: [ main ]
+
+jobs:
+  major-tag-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump major version of tag
+        id: version_major_bump
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: major
+  major-pom-bump:
+    needs: [ major-tag-bump ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Get Previous tag
+        id: previous_tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+      - name: Bump major version of pom
+        run: |
+          mvn -B versions:set -DnewVersion=${{ steps.previous_tag.outputs.tag }} -DgenerateBackupPoms=false
+      - name: Commit and push
+        run: |
+          git pull origin main
+          git add .
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -m "[skip ci] Bump major version"
+          git push origin HEAD:main
+  release:
+    needs: [ major-pom-bump ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: '0'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: maven
+      - name: Get Previous tag
+        id: previous_tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+      - name: Build package
+        run: |
+          mvn package
+          mv ./target/io-texttransformer*.jar ./text-transformer.jar
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.previous_tag.outputs.tag }}
+          release_name: Release for ${{ steps.previous_tag.outputs.tag }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./text-transformer.jar
+          asset_name: text-transformer.jar
+          asset_content_type: application/java-archive
