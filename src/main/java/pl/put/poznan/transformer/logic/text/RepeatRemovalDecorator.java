@@ -15,13 +15,12 @@ public class RepeatRemovalDecorator extends TransformerDecorator {
         final var previous = new Object() {
             String word = null;
         };
-
-        return Stream.of(text.split("\\s+")).reduce((sentence, word) -> {
-            if (word.equals(previous.word)) return super.transform(sentence);
+        return Stream.of(text.split("\\s+")).filter(word -> {
+            var isRepeat = !word.equals(previous.word);
 
             previous.word = word;
-            return super.transform(sentence + " " + word);
-        });
+            return isRepeat;
+        }).mkString(" ");
     }
 
 }
