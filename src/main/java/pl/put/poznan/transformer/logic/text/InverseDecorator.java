@@ -3,6 +3,10 @@ package pl.put.poznan.transformer.logic.text;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa reprezentująca dekorator odwracający znaki w tekście,
+ * bez zmiany wielkości liter według kolejności występowania.
+ */
 public class InverseDecorator extends TransformerDecorator {
     public InverseDecorator(Transformer transformer) {
         super(transformer);

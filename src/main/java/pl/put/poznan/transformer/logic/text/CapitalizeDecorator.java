@@ -1,5 +1,9 @@
 package pl.put.poznan.transformer.logic.text;
 
+/**
+ * Klasa odpowiedzialna za zmianę pierwszej litery pierwszego słowa
+ * w zdaniu na literę wielką.
+ */
 public class CapitalizeDecorator extends TransformerDecorator {
     public CapitalizeDecorator(Transformer transformer) {
         super(transformer);
