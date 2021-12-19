@@ -2,6 +2,9 @@ package pl.put.poznan.transformer.logic.text;
 
 import io.vavr.collection.Stream;
 
+/**
+ * Klasa odpowiedzialna za pozbycie się powtórzeń w tekście.
+ */
 public class RepeatRemovalDecorator extends TransformerDecorator {
     public RepeatRemovalDecorator(Transformer transformer) {
         super(transformer);

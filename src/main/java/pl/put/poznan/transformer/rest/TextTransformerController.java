@@ -7,9 +7,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontroler odpowiedzialny za transformacje tekstu wraz z obsługą dostępnych w projekcie transformacji.
+ * Kontroler przymuje dane na endpoint /api/v2/{string} z opcjonalnym ?transforms
+ * decydującym o transformacjach i zwraca odpowiedź w postaci JSON.
+ */
 @RestController
 @RequestMapping("/api/v2/{string}")
 public class TextTransformerController {
+
+    /**
+     * @param string tekst do transformacji
+     * @param transforms lista transformacji
+     * @return odpowiedź w postaci JSON
+     */
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public String get(@PathVariable String string, @RequestParam(value = "transforms", defaultValue = "upper") List<String> transforms) {
         log(string, transforms);
@@ -20,11 +31,21 @@ public class TextTransformerController {
         return new Gson().toJson(new TransformationDetails(transformations, string, result));
     }
 
+    /**
+     * @param string tekst do transformacji
+     * @param transforms lista transformacji
+     * @return odpowiedź w postaci JSON
+     */
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public String post(@PathVariable String string, @RequestBody List<String> transforms) {
         return get(string, transforms);
     }
 
+    /**
+     * Logowanie do aplikacji informacji o przetwarzanych danych.
+     * @param text tekst do transformacji
+     * @param transforms lista transformacji
+     */
     private static void log(String text, List<String> transforms) {
         logger.info("Requested transformation of '{}' with transforms: {}", text, transforms);
     }

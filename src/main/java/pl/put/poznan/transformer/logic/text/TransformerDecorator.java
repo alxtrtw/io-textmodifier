@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic.text;
 
+/**
+ * Transformator zmieniający podany tekst.
+ */
 public class TransformerDecorator implements Transformer {
     protected final Transformer transformer;
 

@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Klasa odpowiedzialna za zamianę liczby na jej postać słowną.
+ */
 public class NumberToWordDecorator extends TransformerDecorator {
     public NumberToWordDecorator(Transformer transformer) {
         super(transformer);

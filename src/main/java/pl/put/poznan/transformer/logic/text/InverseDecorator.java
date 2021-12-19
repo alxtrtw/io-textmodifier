@@ -2,6 +2,10 @@ package pl.put.poznan.transformer.logic.text;
 
 import io.vavr.collection.CharSeq;
 
+/**
+ * Klasa reprezentująca dekorator odwracający znaki w tekście,
+ * bez zmiany wielkości liter według kolejności występowania.
+ */
 public class InverseDecorator extends TransformerDecorator {
     public InverseDecorator(Transformer transformer) {
         super(transformer);

@@ -4,6 +4,9 @@ import pl.put.poznan.transformer.logic.text.*;
 
 import java.util.function.Function;
 
+/**
+ * Pomocniczy enum służacy do przekazywania metod transformujących tekst.
+ */
 public enum TransformMethod {
     Identity(new IdentityDecorator(new BaseTransformer())),
     Uppercase(new UppercaseDecorator(new BaseTransformer())),

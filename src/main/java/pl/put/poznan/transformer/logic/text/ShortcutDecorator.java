@@ -4,6 +4,9 @@ import io.vavr.collection.CharSeq;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Stream;
 
+/**
+ * Klasa odpowiedzialna za podmianę skrótów na ich rozszerzenia w tekście.
+ */
 public class ShortcutDecorator extends TransformerDecorator {
     public ShortcutDecorator(Transformer transformer) {
         super(transformer);
