@@ -9,9 +9,9 @@ public enum TransformMethod {
     Uppercase(new UppercaseDecorator(new BaseTransformer())),
     Lowercase(new LowercaseDecorator(new BaseTransformer())),
     NumberToWord(new NumberToWordDecorator(new BaseTransformer())),
-    Shortcut(new InverseDecorator(new BaseTransformer())),
+    Shortcut(new ShortcutDecorator(new BaseTransformer())),
     Capitalize(new CapitalizeDecorator(new BaseTransformer())),
-    Inverse(new ShortcutDecorator(new BaseTransformer())),
+    Inverse(new InverseDecorator(new BaseTransformer())),
     RemoveRepeats(new RepeatRemovalDecorator(new BaseTransformer())),
     Unknown(new BaseTransformer());
 
