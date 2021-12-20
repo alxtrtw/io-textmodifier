@@ -1,10 +1,14 @@
 package pl.put.poznan.transformer.logic.text;
 
-import pl.put.poznan.transformer.logic.PolishDictionary;
+import io.vavr.collection.Iterator;
+import io.vavr.collection.Stream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Klasa odpowiedzialna za zamianę liczby na jej postać słowną.
@@ -16,95 +20,109 @@ public class NumberToWordDecorator extends TransformerDecorator {
 
     @Override
     public String transform(String text) {
-        text = super.transform(text);
-
-        String[] words = text.strip().split(" ");
-        String newText = "";
-
-        for (int i = 0; i < words.length; i++){
-            String word = words[i];
-            String check = checkNumber(word);
-            String newWord = " ";
-
-            if (check.equals("integer")){
-                newWord = newWord.concat(translateInteger(word));
-            }
-            else if (check.equals("double")){
-                newWord = newWord.concat(translateDouble(word));
-            }
-            else{
-                newWord = newWord.concat(word);
-            }
-
-            newText = newText.concat(newWord);
-        }
-
-        return text;
+        return Iterator.of(super.transform(text).split("\\s+")).map(this::translate).mkString(" ");
     }
 
-    public static String checkNumber(String strNum) {
-        Pattern integerPattern = Pattern.compile("^\\d+$");
-        Pattern doublePattern = Pattern.compile("/^[0-9]+.[0-9]+$");
+    private String translateInteger(String integerText) {
+        int number = Integer.parseInt(integerText);
 
-        if (integerPattern.matcher(strNum).matches()){
-            int i = Integer.parseInt(strNum);
-            if ( i < 1000 && i >= 0){
-                return "integer";
-            }
-        }
-        else if (doublePattern.matcher(strNum).matches()){
-            int d = Integer.parseInt(strNum);
-            if ( d < 1000 && d >= 0){
-                return "double";
-            }
+        List<String> words = new ArrayList<>();
+        if (number < 0) {
+            words.add("minus");
+            number = -number;
         }
 
-        return "none";
-    }
+        int group = 0;
+        while (number != 0) {
+            int hundred = number % 1_000 / 100;
+            int teen = number % 100 / 10;
+            int unit = number % 10;
+            number = number / 1_000;
 
-    public static String translateInteger(String strNum){
-        PolishDictionary dict = new PolishDictionary();
-
-        String[] digits = strNum.split("");
-        String newText = "";
-
-        for (int i = 0; i < digits.length; i++){
-            String digit = digits[i];
-            String newWord = " ";
-
-            switch (digits.length - i){
-                case 3:
-                    newWord = dict.getHundredDict().get(digit);
-                case 2:
-
-                    if (digit.equals("1")){
-                        newWord = dict.getTenDict().get( digit.concat(digits[digits.length-1]) );
-                        break;
-                    }else{
-                        newWord = dict.getTenDict().get(digit);
-                    }
-
-                case 1:
-                    newWord = dict.getDict().get(digit);
+            // brak elementów do nazwania
+            if (hundred == 0 && teen == 0 && unit == 0) {
+                group += 1;
+                continue;
             }
 
-            newText = newText.concat(newWord);
+            // łączymy dziesiątki i jedności w -naście
+            int ten = 0;
+            if (teen == 1 && unit > 0) {
+                ten = unit;
+                teen = 0;
+                unit = 0;
+            }
+
+            // wybór formy gramatycznej
+            int form;
+            if (unit == 1 && hundred + teen + ten == 0) {
+                form = 0;
+            } else if (2 <= unit && unit <= 4) {
+                form = 1;
+            } else {
+                form = 2;
+            }
+
+            if (group == 0) {
+                words.addAll(Arrays.asList(hundreds.get(hundred), teens.get(teen), tens.get(ten), units.get(unit)));
+            } else {
+                words.addAll(Arrays.asList("", groups.get(group).get(form)));
+            }
+            group += 1;
         }
 
-        return newText.strip();
+        return words.stream().filter(s -> !s.isEmpty()).collect(Collectors.joining(" "));
     }
 
-    public static String translateDouble(String strNum){
-
-        String dot = strNum.replaceAll("[0-9]", "");
-        String[] numbers = strNum.split("\\.");
-        String newText = "";
-
-        newText = newText.concat(translateInteger(numbers[0]));
-        newText = newText.concat(" i ");
-        newText = newText.concat(translateInteger(numbers[1]));
-        newText = newText.concat(" po przecinku");
-
-        return newText;
+    private String translateDecimal(String decimalText) {
+        var numbers = decimalText.split("\\.");
+        return translateInteger(numbers[0]) + " i " + translateInteger(numbers[1]) + " po przecinku";
     }
+
+    private String translate(String word) {
+        switch (NumberType.identify(word)) {
+            case Integer:
+                return translateInteger(word);
+            case Decimal:
+                return translateDecimal(word);
+            case Invalid:
+            default:
+                return word;
+        }
+    }
+
+    private enum NumberType {
+        Integer(Pattern.compile("\\d+")), Decimal(Pattern.compile("\\d+(\\.\\d+)?")), Invalid(Pattern.compile(""));
+
+        NumberType(Pattern pattern) {
+            this.pattern = pattern;
+        }
+
+        private final Pattern pattern;
+
+        public static NumberType identify(String str) {
+            if (Integer.pattern.matcher(str).matches()) return Integer;
+            if (Decimal.pattern.matcher(str).matches()) return Decimal;
+            return Invalid;
+        }
+    }
+
+    private final List<String> units = Arrays.asList("", "jeden", "dwa", "trzy", "cztery", "pięć",
+        "sześć", "siedem", "osiem", "dziewięć");
+
+    private final List<String> tens = Arrays.asList("", "jedenaście", "dwanaście", "trzynaście",
+        "czternaście", "piętnaście", "szesnaście",
+        "siedemnaście", "osiemnaście", "dziewiętnaście");
+
+    private final List<String> teens = Arrays.asList("", "dziesięć", "dwadzieścia", "trzydzieści",
+        "czterdzieści", "pięćdziesiąt", "sześćdziesiąt",
+        "siedemdziesiąt", "osiemdziesiąt", "dziewięćdziesiąt");
+
+    private final List<String> hundreds = Arrays.asList("", "sto", "dwieście", "trzysta",
+        "czterysta", "pięćset", "sześćset",
+        "siedemset", "osiemset", "dziewięćset");
+
+    private final List<List<String>> groups = Arrays.asList(Arrays.asList("", "", ""),
+        Arrays.asList("tysiąc", "tysiące", "tysięcy"));
 }
+

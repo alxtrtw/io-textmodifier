@@ -1,5 +1,7 @@
 package pl.put.poznan.transformer.logic.text;
 
+import io.vavr.collection.CharSeq;
+
 /**
  * Klasa odpowiedzialna za zmianę pierwszej litery pierwszego słowa
  * w zdaniu na literę wielką.
@@ -12,6 +14,6 @@ public class CapitalizeDecorator extends TransformerDecorator {
     @Override
     public String transform(String text) {
         text = super.transform(text);
-        return text.substring(0, 1).toUpperCase() + text.substring(1);
+        return CharSeq.of(text).capitalize().mkString();
     }
 }
