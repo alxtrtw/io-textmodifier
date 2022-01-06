@@ -14,7 +14,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("{string}")
+@RequestMapping("/api/{string}")
 public class TextTransformerController {
 
     /**

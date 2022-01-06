@@ -17,6 +17,7 @@ io-texttransformer-gamma.iml
 /__MACOSX/
 /frontend/node_modules/
 /frontend/.idea/
+/frontend/dist/
 
 # Package Files #
 *.jar
