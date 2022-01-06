@@ -5,7 +5,7 @@ import io.vavr.collection.HashMap;
 import java.util.Arrays;
 
 /**
- * Klasa reprezentująca dekorator odwracający znaki w tekście,
+ * Klasa reprezentująca dekorator szyfrujący tekst w szyfrze cezara,
  * bez zmiany wielkości liter według kolejności występowania.
  */
 public class CesarCipherDecorator extends TransformerDecorator {

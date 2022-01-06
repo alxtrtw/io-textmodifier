@@ -11,8 +11,6 @@ public class TransformationsTest {
         var input = "UPPERCASEDECORATOR";
         var expected = "uppercasedecorator";
 
-        when(decorator.transform(input)).thenReturn(expected);
-
         assertEquals(expected, decorator.transform(input));
     }
 
