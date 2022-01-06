@@ -72,7 +72,7 @@ export const App = () => {
           <Grid item>
             <TextField
               fullWidth
-              multiline={true}
+              multiline
               variant="outlined"
               placeholder="Put your text"
               onChange={({ target: { value } }) => setTransformee(value)}
@@ -86,7 +86,7 @@ export const App = () => {
               value={transformed}
               variant="outlined"
               placeholder="Result of transformation"
-              multiline={true}
+              multiline
             />
           </Grid>
           <Grid item style={{ alignSelf: 'center' }}>
