@@ -17,6 +17,7 @@ public enum TransformMethod {
     Capitalize(new CapitalizeDecorator(new BaseTransformer())),
     Inverse(new InverseDecorator(new BaseTransformer())),
     RemoveRepeats(new RepeatRemovalDecorator(new BaseTransformer())),
+    CesarCipher(new CesarCipherDecorator(new BaseTransformer())),
     Unknown(new BaseTransformer());
 
     TransformMethod(Transformer transform) {this.transform = transform;}
@@ -59,6 +60,10 @@ public enum TransformMethod {
             case "repeat-removal":
             case "remove-repeats":
                 return RemoveRepeats;
+            case "cc":
+            case "cesar":
+            case "cesar-cipher":
+                return CesarCipher;
             default:
                 return Unknown;
         }
