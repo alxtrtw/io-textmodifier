@@ -15,20 +15,14 @@ public class CesarCipherDecorator extends TransformerDecorator {
 
     int alphabetLen = indexToAlphabet.length();
 
-    private char shiftChar(char letter, int shift, String direction){
+    private char shiftChar(char letter, int shift){
 
         boolean isupper = Character.isUpperCase(letter);
         char lowLetter = Character.toLowerCase(letter);
 
         if (alphabetToIndex.keySet().contains(lowLetter)) {
             int currentIndex = alphabetToIndex.get(lowLetter).get();
-            int shiftedIndex;
-            if (direction.equals("góra")){
-                shiftedIndex = currentIndex+shift;
-            } else {
-                shiftedIndex = currentIndex-shift;
-            }
-            int newIndex = Math.floorMod(shiftedIndex, alphabetLen);
+            int newIndex = Math.floorMod(currentIndex+shift, alphabetLen);
 
             char newLetter = indexToAlphabet.get(newIndex).get();
             if (isupper){
@@ -36,7 +30,6 @@ public class CesarCipherDecorator extends TransformerDecorator {
             }else{
                 return newLetter;
             }
-
         }else{
             return letter;
         }
@@ -44,20 +37,14 @@ public class CesarCipherDecorator extends TransformerDecorator {
 
     @Override
     public String transform(String text) {
-        text = super.transform(text);
-        String[] words = text.split(" ");
-        String direction = words[0].toLowerCase();
-        assert (direction.equals("góra") || direction.equals("dół"));
-        int shift = Integer.parseInt(words[1])%alphabetLen;
-        String encodedText = String.join(" ", Arrays.copyOfRange(words, 2, words.length));
 
-        String decodedText = "";
+        int shift = text.length();
+        String encodedText = "";
 
-        for (int i = 0; i < encodedText.length(); i++){
-            decodedText = decodedText + shiftChar(encodedText.charAt(i), shift, direction);
+        for (int i = 0; i < text.length(); i++){
+            encodedText = encodedText + shiftChar(text.charAt(i), shift);
         }
-
-        return decodedText;
+        return encodedText;
     }
 
     private static final HashMap<Integer, Character> indexToAlphabet = HashMap
