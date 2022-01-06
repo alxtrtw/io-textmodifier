@@ -14,3 +14,7 @@ Link do [Javadoc](https://alxtrtw.github.io/io-texttransformer-gamma/docs/).
 ## Sprint #1 do 21.12.2021
 * Cel: Podstawowa konfiguracja i zaimplementowanie najważniejszych elementów Product Backlog'u o wartości BV równej 4.
 * Przyjęty czas na realizację zadań: 9 godzin
+
+## Sprint #2 do 25.01.2021
+* Cel: Stworzenie interfejsu użytkownika, doimplenetowanie elementów Product Backlog'u, aby łączna wartość BV wynosiła 7 oraz stowrzenie testów.
+* Przyjęty czas na realizację zadań: 4 godzin
