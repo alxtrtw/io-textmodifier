@@ -7,13 +7,11 @@ import static org.mockito.Mockito.*;
 public class TransformationsTest {
     @Test
     public void test_UppercaseTransformation() {
-        Transformer decorator = mock(UppercaseDecorator.class);
+        Transformer transformer = new UppercaseDecorator(base);
         var input = "UPPERCASEDECORATOR";
         var expected = "uppercasedecorator";
 
-        when(decorator.transform(input)).thenReturn(expected);
-
-        assertEquals(expected, decorator.transform(input));
+        assertEquals(expected, transformer.transform(input));
     }
 
     @Test
@@ -51,6 +49,7 @@ public class TransformationsTest {
 
         assertEquals(expected, transformer.transform(input));
     }
+
 
     private static final BaseTransformer base = new BaseTransformer();
 }
