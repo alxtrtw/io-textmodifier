@@ -10,6 +10,10 @@ public class RepeatRemovalDecorator extends TransformerDecorator {
         super(transformer);
     }
 
+    /**
+     * @param text Tekst do transformacji
+     * @return transformowany tekst z wyzbytymi się powtórzeniami
+     */
     @Override
     public String transform(String text) {
         final var previous = new Object() {

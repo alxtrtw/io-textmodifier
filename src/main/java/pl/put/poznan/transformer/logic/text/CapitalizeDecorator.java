@@ -11,6 +11,10 @@ public class CapitalizeDecorator extends TransformerDecorator {
         super(transformer);
     }
 
+    /**
+     * @param text Tekst do transformacji
+     * @return transformowany tekst zaczynający się od wielkiej litery
+     */
     @Override
     public String transform(String text) {
         text = super.transform(text);

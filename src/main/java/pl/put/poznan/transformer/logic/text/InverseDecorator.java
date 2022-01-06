@@ -11,6 +11,10 @@ public class InverseDecorator extends TransformerDecorator {
         super(transformer);
     }
 
+    /**
+     * @param text Tekst do transformacji
+     * @return transformowany tekst poddany inwerski zachowującej kolejność wielkości znaków
+     */
     @Override
     public String transform(String text) {
         text = super.transform(text);

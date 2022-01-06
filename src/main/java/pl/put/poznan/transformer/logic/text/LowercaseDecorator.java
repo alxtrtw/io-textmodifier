@@ -8,6 +8,10 @@ public class LowercaseDecorator extends TransformerDecorator {
         super(transformer);
     }
 
+    /**
+     * @param text Tekst do transformacji
+     * @return transformowany tekst o zmienionej wielkości liter na małe
+     */
     @Override
     public String transform(String text) {
         text = super.transform(text);

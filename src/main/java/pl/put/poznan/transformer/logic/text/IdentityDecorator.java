@@ -8,6 +8,10 @@ public class IdentityDecorator extends TransformerDecorator {
         super(transformer);
     }
 
+    /**
+     * @param text Tekst do transformacji
+     * @return transformowany tekst bez zmian (identyczny)
+     */
     @Override
     public String transform(String text) {
         text = super.transform(text);

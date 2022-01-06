@@ -7,6 +7,11 @@ import java.util.function.Function;
  * Klasa odpowiedzialna za dokonanie transformacji na wejściowym łańcuchu znaków.
  */
 public class TransformsApplier {
+    /**
+     * @param transforms Lista metod transformujących
+     * @param string     tekst do przetworzenia
+     * @return Tekst po przetworzeniu
+     */
     public static String apply(List<TransformMethod> transforms, String string) {
         return transforms.stream()
             .map(TransformMethod::getTransform)

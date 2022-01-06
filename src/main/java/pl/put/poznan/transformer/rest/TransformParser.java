@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
  * odpowiadających mu metod transformacyjnych.
  */
 public class TransformParser {
+    /**
+     * @param transforms łańcuchy znaków zawierające reprezentacje słowne metod transformujacych
+     * @return lista metod transformujących
+     */
     public static List<TransformMethod> from(List<String> transforms) {
         return transforms.stream().map(TransformMethod::from).collect(Collectors.toList());
     }
