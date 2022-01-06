@@ -23,11 +23,23 @@ export const transformationOptions: Option<Transformation.AllowedRelation>[] = [
     value: Transformation.AllowedRelation.ShortcutExpander,
   },
   {
+    title: 'Shortcut collapser',
+    value: Transformation.AllowedRelation.ShortcutCollapser,
+  },
+  {
     title: 'Repeat removal',
     value: Transformation.AllowedRelation.RepeatRemoval,
   },
   {
     title: 'Number to word',
     value: Transformation.AllowedRelation.NumberToWord,
+  },
+  {
+    title: 'Cesar cipher',
+    value: Transformation.AllowedRelation.CesarCipher,
+  },
+  {
+    title: 'Inverse',
+    value: Transformation.AllowedRelation.Inverse,
   },
 ];
