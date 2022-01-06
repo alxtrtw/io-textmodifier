@@ -2,16 +2,15 @@ import org.junit.jupiter.api.Test;
 import pl.put.poznan.transformer.logic.text.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class TransformationsTest {
     @Test
     public void test_UppercaseTransformation() {
-        Transformer decorator = mock(UppercaseDecorator.class);
+        Transformer transformer = new UppercaseDecorator(base);
         var input = "UPPERCASEDECORATOR";
         var expected = "uppercasedecorator";
 
-        assertEquals(expected, decorator.transform(input));
+        assertEquals(expected, transformer.transform(input));
     }
 
     @Test
