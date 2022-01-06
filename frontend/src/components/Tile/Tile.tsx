@@ -11,7 +11,7 @@ export const Tile: FC = ({ children }) => (
       justifyContent: 'center',
       width: '100%',
       height: '100%',
-      padding: '10% 35% 5% 35%',
+      padding: '10% 25% 5% 25%',
     }}
   >
     {children}

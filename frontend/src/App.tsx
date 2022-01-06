@@ -51,7 +51,7 @@ export const App = () => {
                   color: 'black',
                 }}
               >
-                {'text transformer'}
+                {'Text transformer'}
               </Typography>{' '}
               <Typography
                 sx={{
@@ -92,7 +92,11 @@ export const App = () => {
           <Grid item style={{ alignSelf: 'center' }}>
             <Button
               variant="contained"
-              sx={{ backgroundColor: 'rgb(61, 87, 70)', boxShadow: 'none' }}
+              sx={{
+                backgroundColor: 'rgb(61, 87, 70)',
+                boxShadow: 'none',
+                textTransform: 'none',
+              }}
               onClick={handleClick}
             >
               <ThemeProvider theme={theme}>
@@ -102,7 +106,7 @@ export const App = () => {
                     color: 'rgb(178, 191, 183)',
                   }}
                 >
-                  let's transform
+                  Let's transform
                 </Typography>
               </ThemeProvider>
             </Button>
