@@ -15,6 +15,9 @@ ioprojectarchitecture.iml
 io-texttransformer-gamma.iml
 /.DS_Store/
 /__MACOSX/
+/frontend/node_modules/
+/frontend/.idea/
+/frontend/dist/
 
 # Package Files #
 *.jar
