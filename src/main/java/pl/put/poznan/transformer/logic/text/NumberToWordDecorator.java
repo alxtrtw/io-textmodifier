@@ -1,11 +1,9 @@
 package pl.put.poznan.transformer.logic.text;
 
 import io.vavr.collection.Iterator;
-import io.vavr.collection.Stream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
