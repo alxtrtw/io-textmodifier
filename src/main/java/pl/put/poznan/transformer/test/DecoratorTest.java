@@ -2,13 +2,14 @@ package pl.put.poznan.transformer.test;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.transformer.logic.text.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class DecoratorTest {
 
     @Test
-    public void testUppercaseDecoratorTransform() {
-        UppercaseDecorator decorator = new UppercaseDecorator(new BaseTransformer());
-        assertEquals("UPPERCASEDECORATOR", decorator.transform("uppercasedecorator"));
+    public void testUppercaseDecoratorTransform(){
+    UppercaseDecorator decorator = mock(UppercaseDecorator.class);
+    when(decorator.transform("uppercasedecorator")).thenReturn("UPPERCASEDECORATOR");
     }
     @Test
     public void testLowercaseDecoratorTransform(){
