@@ -23,8 +23,9 @@ public class DecoratorTest {
     @Test
     public void testShortcutCollapserDecorator(){
         ShortcutCollapserDecorator decorator = new ShortcutCollapserDecorator(new BaseTransformer());
-        assertEquals("Pieczywo to np. np. chleb i bułki", decorator.transform("Pieczywo to na przykład na przykład  chleb i bułki"));
+        assertEquals("Pieczywo to np. np. chleb i bułki", decorator.transform("Pieczywo to Na przykład na przykład  chleb i bułki"));
     }
+
     @Test
     public void testInverseDecorator(){
         InverseDecorator decorator = new InverseDecorator(new BaseTransformer());

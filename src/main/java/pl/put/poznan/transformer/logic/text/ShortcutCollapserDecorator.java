@@ -7,6 +7,7 @@ import io.vavr.collection.Stream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -28,11 +29,11 @@ public class ShortcutCollapserDecorator extends TransformerDecorator {
 
     private String parse(String text) {
         for (String key :shortcuts.keySet()) {
-            if (text.contains(key)){
-                text = text.replace(key, shortcuts.get(key).get());
+            if (text.toLowerCase().contains(key)){
+                text = text.toLowerCase().replace(key, shortcuts.get(key).get());
             }
         }
-        return text;
+        return CharSeq.of(text).capitalize().mkString();
     }
 
     private static final HashMap<String, String> shortcuts = HashMap
