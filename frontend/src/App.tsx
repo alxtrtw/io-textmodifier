@@ -2,34 +2,53 @@ import './App.scss';
 import { useState } from 'react';
 import { Transformation } from './models';
 import { TextTransformService } from './services';
-import AllowedRelation = Transformation.AllowedRelation;
+import { Button, Grid, TextField } from '@mui/material';
+import { Option } from './components/TransformationSelect/utils';
+import { TransformationSelect } from './components/TransformationSelect';
 
-const App = () => {
-  const [transformParams, setTransformParams] = useState('');
+export const App = () => {
+  const [selectedTransformationOptions, setSelectedTransformationOptions] =
+    useState<Option<Transformation.AllowedRelation>[]>([]);
+  const [transformed, setTransformed] = useState('');
+  const [transformee, setTransformee] = useState('');
+
+  const handleClick = () =>
+    TextTransformService.transform(
+      transformee,
+      selectedTransformationOptions.map(({ value }) => value),
+    ).then((response) => setTransformed(response.result));
 
   return (
     <div className="App">
-      <div>
-        <label>
-          Transformation:
-          <input
-            onChange={({ target: { value } }) => setTransformParams(value)}
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <TransformationSelect
+            chips={selectedTransformationOptions}
+            setChips={setSelectedTransformationOptions}
           />
-        </label>
-      </div>
-      <button
-        onClick={async () => {
-          console.log(`clicked with ${transformParams}`);
-          const data = await TextTransformService.transform(transformParams, [
-            AllowedRelation.Identity,
-          ]);
-          console.log({ data });
-        }}
-      >
-        click me
-      </button>
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="Transformee"
+            onChange={({ target: { value } }) => setTransformee(value)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            disabled
+            value={transformed}
+            variant="outlined"
+            placeholder="Here will be your transformed value"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Button variant="contained" onClick={handleClick}>
+            Transform!
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 };
-
-export default App;
