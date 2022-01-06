@@ -34,7 +34,7 @@ export const TransformationSelect: VFC<Props> = ({ chips, setChips }) => {
         <TextField
           {...params}
           variant="outlined"
-          placeholder="Transformations"
+          placeholder="Select transformation"
           fullWidth
         />
       )}
