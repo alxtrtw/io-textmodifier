@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/{string}")
 public class TextTransformerController {
+    public Gson gson = new Gson();
 
     /**
      * @param string     tekst do transformacji
@@ -29,7 +30,7 @@ public class TextTransformerController {
         var transformations = TransformParser.from(transforms);
         var result = TransformsApplier.apply(transformations, string);
 
-        return new Gson().toJson(new TransformationModel(transformations, string, result));
+        return gson.toJson(new TransformationModel(transformations, string, result));
     }
 
     /**
