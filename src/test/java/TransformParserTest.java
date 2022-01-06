@@ -33,4 +33,24 @@ public class TransformParserTest {
 
         assertEquals(expected, TransformParser.from(input));
     }
+
+    @Test
+    public void ShouldReturnUnknown() {
+        TransformParser decorator = mock(TransformParser.class);
+        List<String> input = Arrays.asList("lowercaaase", "identty", "");
+        List<TransformMethod> expected =
+                Arrays.asList(TransformMethod.Unknown, TransformMethod.Unknown, TransformMethod.Unknown);
+
+        assertEquals(expected, TransformParser.from(input));
+    }
+
+    @Test
+    public void ShouldReturnEmptyList() {
+        TransformParser decorator = mock(TransformParser.class);
+        List<String> input = Arrays.asList();
+        List<TransformMethod> expected = Arrays.asList();
+
+        assertEquals(expected, TransformParser.from(input));
+    }
+
 }
