@@ -2,7 +2,6 @@ import org.junit.jupiter.api.Test;
 import pl.put.poznan.transformer.logic.text.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class TransformationsTest {
     @Test
@@ -49,7 +48,6 @@ public class TransformationsTest {
 
         assertEquals(expected, transformer.transform(input));
     }
-
 
     private static final BaseTransformer base = new BaseTransformer();
 }
