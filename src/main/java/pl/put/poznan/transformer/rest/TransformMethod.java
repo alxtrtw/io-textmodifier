@@ -12,7 +12,8 @@ public enum TransformMethod {
     Uppercase(new UppercaseDecorator(new BaseTransformer())),
     Lowercase(new LowercaseDecorator(new BaseTransformer())),
     NumberToWord(new NumberToWordDecorator(new BaseTransformer())),
-    Shortcut(new ShortcutDecorator(new BaseTransformer())),
+    ShortcutExpanse(new ShortcutExpanderDecorator(new BaseTransformer())),
+    ShortcutCollapse(new ShortcutCollapserDecorator(new BaseTransformer())),
     Capitalize(new CapitalizeDecorator(new BaseTransformer())),
     Inverse(new InverseDecorator(new BaseTransformer())),
     RemoveRepeats(new RepeatRemovalDecorator(new BaseTransformer())),
@@ -43,10 +44,14 @@ public enum TransformMethod {
             case "capitalize":
             case "capitalized":
                 return Capitalize;
-            case "s":
-            case "shortcut":
-            case "shortcuts":
-                return Shortcut;
+            case "se":
+            case "shortcut-ex":
+            case "shortcuts-e":
+                return ShortcutExpanse;
+            case "sc":
+            case "shortcut-co":
+            case "shortcuts-c":
+                return ShortcutCollapse;
             case "ntw":
             case "number-to-word":
             case "to-word":
