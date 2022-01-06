@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class TransformParserTest {
+    TransformParser decorator = mock(TransformParser.class);
 
     @Test
     public void ShouldReturnTransforms() {
-        TransformParser decorator = mock(TransformParser.class);
         List<String> input = Arrays.asList("id", "i", "u", "l", "c", "se", "sc", "ntw", "rr", "cc");
         List<TransformMethod> expected =
                 Arrays.asList(  TransformMethod.Identity, TransformMethod.Inverse, TransformMethod.Uppercase,
@@ -26,7 +26,6 @@ public class TransformParserTest {
 
     @Test
     public void ShouldReturnDuplicates() {
-        TransformParser decorator = mock(TransformParser.class);
         List<String> input = Arrays.asList("cc", "cesar", "cesar-cipher");
         List<TransformMethod> expected =
                 Arrays.asList(TransformMethod.CesarCipher, TransformMethod.CesarCipher, TransformMethod.CesarCipher);
@@ -36,7 +35,6 @@ public class TransformParserTest {
 
     @Test
     public void ShouldReturnUnknown() {
-        TransformParser decorator = mock(TransformParser.class);
         List<String> input = Arrays.asList("lowercaaase", "identty", "");
         List<TransformMethod> expected =
                 Arrays.asList(TransformMethod.Unknown, TransformMethod.Unknown, TransformMethod.Unknown);
@@ -46,7 +44,6 @@ public class TransformParserTest {
 
     @Test
     public void ShouldReturnEmptyList() {
-        TransformParser decorator = mock(TransformParser.class);
         List<String> input = Arrays.asList();
         List<TransformMethod> expected = Arrays.asList();
 

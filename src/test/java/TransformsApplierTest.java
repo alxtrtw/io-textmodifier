@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 public class TransformsApplierTest {
+    TransformsApplier decorator = mock(TransformsApplier.class);
 
     @Test
     public void ShouldReturnIdentical() {
-        TransformsApplier decorator = mock(TransformsApplier.class);
         List<TransformMethod> inputTransforms = Arrays.asList(TransformMethod.Inverse, TransformMethod.Inverse);
         String inputString = "Ala ma kota o imieniu Bartłomiej";
 
@@ -22,7 +22,6 @@ public class TransformsApplierTest {
 
     @Test
     public void ShouldReturnSingleNumber() {
-        TransformsApplier decorator = mock(TransformsApplier.class);
         List<TransformMethod> inputTransforms =
                 Arrays.asList(TransformMethod.NumberToWord, TransformMethod.RemoveRepeats);
         String inputString = "Mam w portfelu 1000 tysiąc złotych";
@@ -33,7 +32,6 @@ public class TransformsApplierTest {
 
     @Test
     public void ShouldReturnProperIntroduction() {
-        TransformsApplier decorator = mock(TransformsApplier.class);
         List<TransformMethod> inputTransforms =
                 Arrays.asList(TransformMethod.Capitalize, TransformMethod.ShortcutExpanse);
         String inputString = "szanowna Pani prof.";
@@ -44,7 +42,6 @@ public class TransformsApplierTest {
 
     @Test
     public void ShouldReturnUpperAndLowerNumbers() {
-        TransformsApplier decorator = mock(TransformsApplier.class);
         List<TransformMethod> inputTransforms =
                 Arrays.asList(TransformMethod.Uppercase, TransformMethod.NumberToWord);
         String inputString = "tysiąc 1000 sto 100 dwieście 200";
