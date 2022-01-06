@@ -1,21 +1,11 @@
-import axios from 'axios';
-import './App.css';
-import { useCallback, useState } from 'react';
-
-interface TransformationModel {
-  transformations: string[];
-  source: string;
-  result: string;
-}
+import './App.scss';
+import { useState } from 'react';
+import { Transformation } from './models';
+import { TextTransformService } from './services';
+import AllowedRelation = Transformation.AllowedRelation;
 
 const App = () => {
   const [transformParams, setTransformParams] = useState('');
-
-  const handleClick = useCallback(async () => {
-    axios
-      .get<TransformationModel>(`http://localhost:8080/api/${transformParams}`)
-      .then(({}) => {});
-  }, [transformParams]);
 
   return (
     <div className="App">
@@ -30,7 +20,9 @@ const App = () => {
       <button
         onClick={async () => {
           console.log(`clicked with ${transformParams}`);
-          const data = await handleClick();
+          const data = await TextTransformService.transform(transformParams, [
+            AllowedRelation.Identity,
+          ]);
           console.log({ data });
         }}
       >
