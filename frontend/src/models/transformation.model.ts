@@ -7,12 +7,14 @@ export module Transformation {
 
   export enum AllowedRelation {
     Identity = 'identity',
-    Inverse = 'inverse',
     Uppercase = 'uppercase',
     Lowercase = 'lowercase',
-    Capitalize = 'capitalize',
-    ShortcutExpander = 'shortcut',
-    RepeatRemoval = 'repeat-removal',
     NumberToWord = 'number-to-word',
+    ShortcutExpander = 'shortcut-ex',
+    ShortcutCollapser = 'shortcut-co',
+    Capitalize = 'capitalize',
+    RepeatRemoval = 'repeat-removal',
+    Inverse = 'inverse',
+    CesarCipher = 'cesar-cipher',
   }
 }
