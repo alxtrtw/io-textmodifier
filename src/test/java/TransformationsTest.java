@@ -7,8 +7,8 @@ public class TransformationsTest {
     @Test
     public void test_UppercaseTransformation() {
         Transformer transformer = new UppercaseDecorator(base);
-        var input = "UPPERCASEDECORATOR";
-        var expected = "uppercasedecorator";
+        var input = "uppercasedecorator";
+        var expected = "UPPERCASEDECORATOR";
 
         assertEquals(expected, transformer.transform(input));
     }
